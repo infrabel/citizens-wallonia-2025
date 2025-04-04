@@ -1,0 +1,9 @@
+jupyter
+jupyterlab
+pandas
+pygwalker
+duckdb
+geopandas
+matplotlib
+branca
+folium
