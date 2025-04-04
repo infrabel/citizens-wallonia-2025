@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Punctuality Chart</title>
+  <!-- Load Plotly from CDN -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+  </style>
+</head>
+<body>
+  <!-- Container for the Plotly chart -->
+  <div id="chart" style="width: 100%; height: 500px;"></div>
+
+  <script>
+    // Sample JSON data (could be loaded externally)
+    let jsonData = {
+      "month_name": ["January", "February", "March", "April"],
+      "mean_delay_minutes": [10, 15, 12, 8],
+      "on_time": [80, 75, 85, 50],
+      "in_late": [20, 25, 15, 50]
+    };
+
+    // In your Python code you filtered for 2024.
+    // Here we assume jsonData already contains only 2024 data.
+    let months      = jsonData.month_name;
+    let meanDelay   = jsonData.mean_delay_minutes;
+    let onTime      = jsonData.on_time;
+    let inLate      = jsonData.in_late;
+
+    // Define the top subplot: a bar chart for mean delay minutes.
+    let trace1 = {
+      x: months,
+      y: meanDelay,
+      type: 'bar',
+      name: 'Mean Delay',
+      xaxis: 'x',
+      yaxis: 'y'
+    };
+
+    // Define the bottom subplot traces: a stacked area chart.
+    // Using scatter traces with the stackgroup property creates a stackplot.
+    let trace2 = {
+      x: months,
+      y: onTime,
+      type: 'scatter',
+      mode: 'lines',
+      stackgroup: 'one',
+      name: 'On Time',
+      xaxis: 'x2',
+      yaxis: 'y2'
+    };
+
+    let trace3 = {
+      x: months,
+      y: inLate,
+      type: 'scatter',
+      mode: 'lines',
+      stackgroup: 'one',
+      name: 'In Late',
+      xaxis: 'x2',
+      yaxis: 'y2'
+    };
+
+    // Combine all traces.
+    let data = [trace1, trace2, trace3];
+
+    // Layout configuration with two rows:
+    // - The top subplot hides its x-axis tick labels.
+    // - Both subplots have rotated x-axis tick labels.
+    let layout = {
+      title: 'Punctuality',
+      grid: {rows: 2, columns: 1, subplots: [['xy'], ['xy2']]},
+      // Top subplot (bar chart)
+      xaxis: {
+        tickangle: -45,
+        showticklabels: false
+      },
+      // Bottom subplot (stacked area chart)
+      xaxis2: {
+        tickangle: -45
+      },
+      margin: { t: 50, b: 50 }
+    };
+
+    // Render the chart in the 'chart' div.
+    Plotly.newPlot('chart', data, layout);
+  </script>
+</body>
+</html>
