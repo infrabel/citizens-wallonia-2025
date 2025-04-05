@@ -11,7 +11,6 @@ with DAG(
     start_date=datetime(2025, 1, 1),
     schedule=Dataset("infrabel.calculated_delay"),
     default_args={'owner': 'Joffrey', 'retries': 2},
-    description="A basic DAG structure using the DAG class notation.",
     tags=['Gold', 'Punctuality'],
 ) as dag:
 
@@ -27,7 +26,6 @@ with DAG(
         """,
         conn_id='postgres:datawarehouse',
         show_return_value_in_logs=True,
-        doc_md="Query Infrabel's OpenData to retrieve punctuality per month data",
     )
 
     def format_for_web(ti: TaskInstance):
@@ -44,7 +42,6 @@ with DAG(
         task_id='format_data_for_web',
         python_callable=format_for_web,
         show_return_value_in_logs=True,
-        doc_md="Query Infrabel's OpenData to retrieve punctuality per month data",
     )
 
     def render_html(ti: TaskInstance):

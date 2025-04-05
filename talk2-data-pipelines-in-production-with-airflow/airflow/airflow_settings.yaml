@@ -16,11 +16,11 @@ airflow:
       conn_host: ":memory:"
     - conn_id: "postgres:datawarehouse"
       conn_type: "postgres"
-      conn_host: "datawarehouse" # docker network ls -> edit docker-compose.yaml -> docker compose up
+      conn_host: "datawarehouse" # docker network ls -> edit docker-compose.yaml -> docker compose up (help: docker network <network> <container>)
       conn_schema: "postgres"
       conn_login: "postgres"
       conn_password: "postgres"
-      conn_port: "5433"
+      conn_port: "5432"
 #    - conn_id:
 #      conn_type:
 #      conn_host:

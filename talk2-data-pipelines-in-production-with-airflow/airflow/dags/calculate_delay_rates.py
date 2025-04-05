@@ -10,7 +10,6 @@ with DAG(
     start_date=datetime(2025, 1, 1),
     schedule=Dataset("infrabel.punctuality"),
     default_args={'owner': 'Joffrey', 'retries': 2},
-    description="A basic DAG structure using the DAG class notation.",
     tags=['Silver', 'Punctuality'],
 ) as dag:
 
@@ -25,7 +24,6 @@ with DAG(
         conn_id='postgres:datawarehouse',
         follow_task_ids_if_true=["refresh_view"],
         follow_task_ids_if_false=["create_view"],
-        doc_md="Query Infrabel's OpenData to retrieve punctuality per month data",
     )
 
     create_view = SQLExecuteQueryOperator(
@@ -47,7 +45,6 @@ with DAG(
             WITH DATA;
         """,
         conn_id='postgres:datawarehouse',
-        doc_md="Query Infrabel's OpenData to retrieve punctuality per month data",
         outlets=outlets
     )
 
@@ -55,7 +52,6 @@ with DAG(
         task_id='refresh_view',
         sql="""REFRESH MATERIALIZED VIEW infrabel.calculated_delay;""",
         conn_id='postgres:datawarehouse',
-        doc_md="Query Infrabel's OpenData to retrieve punctuality per month data",
         outlets=outlets
     )
 

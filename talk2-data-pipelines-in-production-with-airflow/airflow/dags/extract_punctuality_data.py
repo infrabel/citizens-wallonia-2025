@@ -10,7 +10,6 @@ with DAG(
     schedule='@daily',
     catchup=False,
     default_args={'owner': 'Joffrey', 'retries': 2},
-    description="A basic DAG structure using the DAG class notation.",
     tags=['Bronze', 'Punctuality'],
 ) as dag:
 
@@ -32,7 +31,6 @@ with DAG(
         },
         response_filter=lambda response: response.json()["results"],
         log_response=True,
-        doc_md="Query Infrabel's OpenData to retrieve punctuality per month data",
     )
 
     push_to_database = GenericTransfer(
